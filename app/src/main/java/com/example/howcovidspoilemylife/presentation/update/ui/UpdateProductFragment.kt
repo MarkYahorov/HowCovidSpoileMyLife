@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.howcovidspoilemylife.R
 import com.example.howcovidspoilemylife.databinding.FragmentUpdateProductBinding
 import com.example.howcovidspoilemylife.presentation.models.Product
 import com.example.howcovidspoilemylife.presentation.update.viewModel.UpdateViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.Lazy
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class UpdateProductFragment : Fragment() {
@@ -22,6 +25,7 @@ class UpdateProductFragment : Fragment() {
     private val viewModel: UpdateViewModel by viewModels { factory.get() }
     private val args by navArgs<UpdateProductFragmentArgs>()
     private lateinit var binding: FragmentUpdateProductBinding
+    private val dateFormat = SimpleDateFormat.getDateInstance()
     private var currentDate: Long = 0L
 
     override fun onCreateView(
@@ -36,7 +40,7 @@ class UpdateProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.nameOfProductTextView.setText(args.currentTask.name)
-        binding.dateTextView.text = args.currentTask.time.toString()
+        binding.dateTextView.text = dateFormat.format(args.currentTask.time)
     }
 
     override fun onStart() {
@@ -57,7 +61,7 @@ class UpdateProductFragment : Fragment() {
         picker.show(childFragmentManager, "DATE_PICKER")
         picker.addOnPositiveButtonClickListener {
             currentDate = picker.selection!!
-            binding.dateTextView.text = currentDate.toString()
+            binding.dateTextView.text = dateFormat.format(currentDate)
             picker.dismiss()
         }
         picker.addOnNegativeButtonClickListener {
@@ -83,6 +87,7 @@ class UpdateProductFragment : Fragment() {
                         getDate()
                     )
                 )
+                findNavController().navigate(R.id.action_addProductFragment_to_productsListsFragment)
             }
         }
     }

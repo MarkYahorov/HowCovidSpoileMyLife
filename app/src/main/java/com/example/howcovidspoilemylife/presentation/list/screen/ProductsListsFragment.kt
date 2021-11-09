@@ -1,23 +1,23 @@
 package com.example.howcovidspoilemylife.presentation.list.screen
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.howcovidspoilemylife.core.CovidApplication
 import com.example.howcovidspoilemylife.databinding.FragmentProductsListsFrragmentBinding
-import com.example.howcovidspoilemylife.presentation.list.adapters.BadProductAdapter
-import com.example.howcovidspoilemylife.presentation.list.adapters.GoodProductAdapter
+import com.example.howcovidspoilemylife.presentation.list.adapters.ProductAdapter
 import com.example.howcovidspoilemylife.presentation.list.di.ListComponent
+import com.example.howcovidspoilemylife.presentation.list.viewModel.Common
 import com.example.howcovidspoilemylife.presentation.list.viewModel.ListViewModel
 import dagger.Lazy
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class ProductsListsFragment : Fragment() {
@@ -26,24 +26,40 @@ class ProductsListsFragment : Fragment() {
     lateinit var factory: Lazy<ListViewModel.Factory>
     private val viewModel: ListViewModel by viewModels { factory.get() }
     private lateinit var binding: FragmentProductsListsFrragmentBinding
+    private val dateFormat = SimpleDateFormat.getDateInstance()
     private val badProductsAdapter by lazy {
-        BadProductAdapter {
+        ProductAdapter(dateFormat, {
             val action =
                 ProductsListsFragmentDirections.actionProductsListsFragmentToUpdateProductFragment(
-                    it
+                    it.product
                 )
             findNavController().navigate(action)
-        }
+        }, { createDialog(it) }
+        )
     }
 
     private val goodProductAdapter by lazy {
-        GoodProductAdapter {
+        ProductAdapter(dateFormat, {
             val action =
                 ProductsListsFragmentDirections.actionProductsListsFragmentToUpdateProductFragment(
-                    it
+                    it.product
                 )
             findNavController().navigate(action)
-        }
+        }, { createDialog(it) }
+        )
+    }
+
+    private fun createDialog(common: Common) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("ВЫ хотите удалить пункт?")
+            .setPositiveButton("Да") { dialog, _ ->
+                viewModel.deleteProduct(common.product)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Нет") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +70,7 @@ class ProductsListsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProductsListsFrragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -83,33 +99,40 @@ class ProductsListsFragment : Fragment() {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
         super.onStart()
 
         setBtnsListeners()
-        viewModel.getBadProducts()
-        viewModel.getGoodProducts()
+        viewModel.getProducts()
 
-        viewModel.goodProductLiveData.observe(viewLifecycleOwner, {
-            if (it.isNullOrEmpty()) {
-
+        viewModel.productLiveData.observe(viewLifecycleOwner, { list ->
+            if (list.isNullOrEmpty()) {
+                setEmptyStateVisibity(isVisible = true)
             } else {
-                val list = it.sortedBy { it.time }
-                goodProductAdapter.getList().addAll(list)
-                goodProductAdapter.notifyDataSetChanged()
+                setEmptyStateVisibity(isVisible = false)
+                val goodProductsList = mutableListOf<Common>()
+                val badProductsList = mutableListOf<Common>()
+                list.forEach {
+                    if (it.product.isGoodProduct == 1) {
+                        badProductsList.add(it)
+                    } else {
+                        goodProductsList.add(it)
+                    }
+                }
+                goodProductAdapter.submitList(goodProductsList)
+                badProductsAdapter.submitList(badProductsList)
             }
         })
+    }
 
-        viewModel.badProductLiveData.observe(viewLifecycleOwner, {
-            if (it.isNullOrEmpty()) {
-
-            } else {
-                val list = it.sortedBy { it.time }
-                Log.e("key", "$list")
-                badProductsAdapter.submitList(list)
-            }
-        })
+    private fun setEmptyStateVisibity(isVisible: Boolean) {
+        binding.emptyState.imageView.isVisible = isVisible
+        binding.emptyState.textView2.isVisible = isVisible
+        binding.addBadProductBtn.isVisible = !isVisible
+        binding.addGoodProductBtn.isVisible = !isVisible
+        binding.listBadProducts.isVisible = !isVisible
+        binding.listGoodProducts.isVisible = !isVisible
+        binding.listsDivider.isVisible = !isVisible
     }
 
     private fun setBtnsListeners() {

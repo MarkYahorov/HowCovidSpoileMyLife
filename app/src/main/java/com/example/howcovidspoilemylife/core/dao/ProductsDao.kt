@@ -11,11 +11,8 @@ interface ProductsDao {
     @Insert
     fun insertProducts(productsDto: ProductsDto)
 
-    @Query("SELECT * FROM $TABLE_NAME  WHERE isGoodProduct = 0")
-    fun selectAllGoodProducts(): List<ProductsDto>
-
-    @Query("SELECT * FROM $TABLE_NAME  WHERE isGoodProduct = 1")
-    fun selectAllBadProducts(): List<ProductsDto>
+    @Query("SELECT * FROM $TABLE_NAME ORDER BY id ASC")
+    fun selectAllProducts(): List<ProductsDto>
 
     @Update
     fun updateProduct(productsDto: ProductsDto)

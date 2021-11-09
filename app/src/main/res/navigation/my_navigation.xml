@@ -13,6 +13,9 @@
         <argument
             android:name="isGoodProduct"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_addProductFragment_to_productsListsFragment"
+            app:destination="@id/productsListsFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateProductFragment"
@@ -22,6 +25,9 @@
         <argument
             android:name="currentTask"
             app:argType="com.example.howcovidspoilemylife.presentation.models.Product" />
+        <action
+            android:id="@+id/action_updateProductFragment_to_productsListsFragment"
+            app:destination="@id/productsListsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productsListsFragment"

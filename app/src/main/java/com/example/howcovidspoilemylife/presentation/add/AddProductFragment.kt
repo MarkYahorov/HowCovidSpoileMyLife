@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.howcovidspoilemylife.R
 import com.example.howcovidspoilemylife.core.CovidApplication
 import com.example.howcovidspoilemylife.databinding.FragmentAddProductBinding
 import com.example.howcovidspoilemylife.presentation.add.di.AddComponent
@@ -16,6 +18,7 @@ import com.example.howcovidspoilemylife.presentation.add.viewModel.AddViewModel
 import com.example.howcovidspoilemylife.presentation.models.Product
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.Lazy
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class AddProductFragment : Fragment() {
@@ -25,6 +28,7 @@ class AddProductFragment : Fragment() {
     private val viewModel: AddViewModel by viewModels { factory.get() }
     private val args by navArgs<AddProductFragmentArgs>()
     private lateinit var binding: FragmentAddProductBinding
+    private val dateFormat = SimpleDateFormat.getDateInstance()
     private var currentDate: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +71,7 @@ class AddProductFragment : Fragment() {
                         )
                     )
                 }
+                findNavController().navigate(R.id.action_addProductFragment_to_productsListsFragment)
             }
         }
     }
@@ -76,7 +81,7 @@ class AddProductFragment : Fragment() {
         picker.show(childFragmentManager, "DATE_PICKER")
         picker.addOnPositiveButtonClickListener {
             currentDate = picker.selection!!
-            binding.dateTextView.text = currentDate.toString()
+            binding.dateTextView.text = dateFormat.format(currentDate)
             picker.dismiss()
         }
         picker.addOnNegativeButtonClickListener {

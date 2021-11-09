@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_bad_product_btn"
         android:layout_width="wrap_content"
@@ -14,7 +17,8 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/bad"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_bad_products"
@@ -53,6 +57,13 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/good" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/empty_state"
+        layout="@layout/empty_state_layout"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
