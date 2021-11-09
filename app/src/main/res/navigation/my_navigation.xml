@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_navigation"
+    app:startDestination="@id/productsListsFragment">
+
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="com.example.howcovidspoilemylife.presentation.add.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" >
+        <argument
+            android:name="isGoodProduct"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProductFragment"
+        android:name="com.example.howcovidspoilemylife.presentation.update.ui.UpdateProductFragment"
+        android:label="fragment_update_product"
+        tools:layout="@layout/fragment_update_product" >
+        <argument
+            android:name="currentTask"
+            app:argType="com.example.howcovidspoilemylife.presentation.models.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/productsListsFragment"
+        android:name="com.example.howcovidspoilemylife.presentation.list.screen.ProductsListsFragment"
+        android:label="ProductsListsFragment" >
+        <action
+            android:id="@+id/action_productsListsFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_productsListsFragment_to_updateProductFragment"
+            app:destination="@id/updateProductFragment" />
+    </fragment>
+</navigation>
