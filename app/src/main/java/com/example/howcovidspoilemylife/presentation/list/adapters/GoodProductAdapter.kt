@@ -59,4 +59,8 @@ class GoodProductAdapter(private val onClick: (Product) -> Unit) :
             ITEM_HOLDER -> (holder as ItemHolder).bind(list[position])
         }
     }
+
+    override fun getItemCount(): Int {
+        TODO("Not yet implemented")
+    }
 }
