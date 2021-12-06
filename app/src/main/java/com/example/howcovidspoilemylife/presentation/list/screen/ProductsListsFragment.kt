@@ -126,12 +126,7 @@ class ProductsListsFragment : Fragment() {
     }
 
     private fun setEmptyStateVisibity(isVisible: Boolean) {
-        binding.emptyState.imageView.isVisible = isVisible
-        binding.emptyState.textView2.isVisible = isVisible
-        binding.addBadProductBtn.isVisible = !isVisible
-        binding.addGoodProductBtn.isVisible = !isVisible
-        binding.listBadProducts.isVisible = !isVisible
-        binding.listGoodProducts.isVisible = !isVisible
+        binding.emptyState.root.isVisible = isVisible
         binding.listsDivider.isVisible = !isVisible
     }
 

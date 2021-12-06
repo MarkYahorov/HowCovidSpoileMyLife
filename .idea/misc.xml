@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.75" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/HowCovidSpoileMyLife/app/src/main/res/layout/activity_main.xml" value="0.1644021739130435" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/HowCovidSpoileMyLife/app/src/main/res/layout/bad_item.xml" value="0.22" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/HowCovidSpoileMyLife/app/src/main/res/layout/date_iten.xml" value="0.1644021739130435" />
@@ -11,10 +11,12 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/HowCovidSpoileMyLife/app/src/main/res/layout/fragment_products_lists_frragment.xml" value="0.22" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/HowCovidSpoileMyLife/app/src/main/res/layout/fragment_update_product.xml" value="0.1644021739130435" />
         <entry key="app/src/main/res/drawable/ic_file.xml" value="0.2296875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/layout/bad_item.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/layout/date_item.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/layout/empty_state_layout.xml" value="0.37916666666666665" />
-        <entry key="app/src/main/res/layout/fragment_products_lists_frragment.xml" value="0.37916666666666665" />
+        <entry key="app/src/main/res/layout/fragment_add_product.xml" value="0.37916666666666665" />
+        <entry key="app/src/main/res/layout/fragment_products_lists_frragment.xml" value="0.25" />
       </map>
     </option>
   </component>
